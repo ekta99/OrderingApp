@@ -1,0 +1,32 @@
+<link href="https://fonts.googleapis.com/css?family=Abel&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+  <a class="navbar-brand logo" [routerLink]="'product'">eKart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item myitem  mr-1">
+        <a class="btn btn-outline-light  navbar-btn" [routerLink]="'product/viewcart'" *ngIf="loginTitle == 'Logout'"><i class="fa fa-shopping-cart fa-1x"></i> View Cart
+         </a>
+      </li>
+      <li class="nav-item myitem mr-1">
+        <a class="btn btn-outline-light navbar-btn" [routerLink]="'product/updatepassword'" *ngIf="loginTitle == 'Logout'"> Update password {{username}}</a>
+      </li> 
+      <li class="nav-item myitem  mr-1">
+        <a class="btn btn-outline-light  navbar-btn" [routerLink]="'product/myorders'" *ngIf="loginTitle == 'Logout'"> View Orders
+         </a>
+      </li>
+      <li class="nav-item myitem" >
+        <a class="btn btn-outline-light  navbar-btn" (click)="login()"  #loginEl> {{loginTitle}}</a>
+      </li>
+    </ul>
+  </div>  
+</nav>
+<div>
+  <router-outlet></router-outlet>
+</div>

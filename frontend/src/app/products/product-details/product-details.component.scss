@@ -1,0 +1,16 @@
+
+
+:host{
+    
+    .gallery-wrap .img-big-wrap img {
+        height: 450px;
+        width: auto;
+        width: -webkit-fill-available !important;
+        cursor: zoom-in;
+    }
+    .success{
+        color: green;
+        background-color: beige;
+    }
+
+}

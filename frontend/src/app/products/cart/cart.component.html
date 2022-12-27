@@ -1,0 +1,139 @@
+<section >
+    <div class="container py-5">
+      <div class="row d-flex justify-content-center my-4" *ngIf="cart && cart.items.length>0">
+        <div class="col-md-8">
+          <div class="card bg-dark text-white mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Cart</h5>
+            </div>
+            <div class="card-body" >
+              <!-- <div *ngIf="cart.items.length==0" > <button type="button" class="btnbtn-outline-light btn-lg btn-block text-uppercase">
+                <i class="fa fa-shopping-cart fa-10x"></i>
+                <a>Go to product List</a>
+              </button></div> -->
+              <!-- Single item -->
+              <div class="row"  *ngFor="let item of cart.items ">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                  <!-- Image -->
+                  <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                    <img src="{{item.productPicture}}"
+                      class="w-100" alt="{{item.productName}}" />
+                    <a href="#!">
+                      <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                    </a>
+                  </div>
+                  <!-- Image -->
+                </div>
+  
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                  <!-- Data -->
+                  <p><strong>{{item.productName}}</strong></p>
+                  <p>Brand: {{item.manufacturer}}</p>
+                  
+                  <button type="button" class="btn btn-outline-light btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                    title="Remove item" (click)="removeFromCart(0,item.productName)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <!-- <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                    title="Move to the wish list">
+                    <i class="fa fa-heart"></i>
+                  </button> -->
+                  <!-- Data -->
+                </div>
+  
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                  <!-- Quantity -->
+                  <div class="d-flex mb-4" style="max-width: 150px">
+                    <button class="btn btn-outline-light px-3 me-2" [disabled]=" item.quantity==1"
+                      onclick=" this.parentNode.querySelector('input[type=number]').stepDown();this.parentNode.querySelector('input[type=number]').dispatchEvent(new Event('change'))">
+                      <i class="fa fa-minus"></i>
+                    </button>
+  
+                    <div class="form-outline mr-2 ml-2 ">
+                      <input class="width-50 form-control" id="form1" min="1" max="4" name="quantity" type="number" value="{{item.quantity}}"  (change)="updateQuantity($event,item.productName)"  #qty/>
+                      <!-- <label class="form-label" for="form1" >Quantity</label> -->
+                    </div>
+  
+                    <button class="btn btn-outline-light px-3 ms-2"  [disabled]=" item.quantity==4"
+                      onclick=" this.parentNode.querySelector('input[type=number]').stepUp();this.parentNode.querySelector('input[type=number]').dispatchEvent(new Event('change'))">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                  <!-- Quantity -->
+  
+                  <!-- Price -->
+                  <p class="text-start text-md-center">
+                    <strong>M.R.P. {{(item.cost - item.cost * 0.01 * item.discountPercentage) | currency : 'INR' : 'symbol' : '1.0-0'
+                      }} </strong>
+                  </p>
+                  <!-- Price -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card bg-dark text-white mb-4">
+            <div class="card-body">
+              <p><strong>Expected shipping delivery</strong></p>
+              <p class="mb-0">12.10.2020 - 14.10.2020</p>
+            </div>
+          </div>
+          <div class="card bg-dark text-white mb-4 mb-lg-0">
+            <div class="card-body">
+              <p><strong>We accept</strong></p>
+              <img class="me-2 mr-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                alt="Visa" />
+              <img class="me-2 mr-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                alt="American Express" />
+              <img class="me-2 mr-2" width="45px"
+                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                alt="Mastercard" />
+             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="cart.items.length>0">
+          <div class="card bg-dark  mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0 text-white">Summary</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                  Products
+                  <span>{{cart.totalprice  | currency : 'INR' : 'symbol' : '1.0-0'}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  Shipping Charges
+                  <span>{{cart.totaldeliverycharge | currency : 'INR' : 'symbol' : '1.0-0' }}</span>
+                </li>
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                  <div>
+                    <strong>Total amount</strong>
+                    <strong>
+                      <p class="mb-0">(including VAT)</p>
+                    </strong>
+                  </div>
+                  <span><strong>{{cart.grandtotal |  currency : 'INR' : 'symbol' : '1.0-0'}}</strong></span>
+                </li>
+              </ul>
+  
+              <button type="button"  (click)="placeOrder(cart)" class="btnbtn-outline-light btn-lg btn-block">
+                Place order
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div  class="card bg-dark text-white py-5 align-center" *ngIf=" errorMessage!='' || cart==null || cart.items.length==0 " >
+        <div> 
+          <div><i class="fa fa-shopping-cart  fa-5x"></i></div>
+          <div class="text-normal">Cart is empty </div>
+          <div> add some  <a [routerLink]="['../../product']">products</a> to cart</div>
+        </div>
+      </div>
+    </div>
+  </section>

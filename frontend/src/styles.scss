@@ -1,0 +1,87 @@
+/* You can add global styles to this file, and also import other style files */
+
+// nav{
+//     background-color: rgb(0, 0, 0);
+// }
+
+.logo{
+    font-family: navBrandFont;
+    color:white;
+}
+
+.logo:hover{
+    color: rgb(219, 216, 216);
+}
+
+.myitem{
+    font-family:'Montserrat', sans-serif;
+    font-size:13px;
+}
+
+.mylink{
+    color:white;
+}
+
+.mylink:hover{
+    color: rgb(219, 216, 216);
+}
+
+body{
+    background-image: url(./assets/Images/cloud-2725520_960_720.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-color: rgb(226, 227, 228); */
+}
+
+.content{
+    overflow-x: hidden;
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  
+// #content-wrap {
+//     padding-bottom: 2.5rem;    /* Footer height */
+// }
+  
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-family:'Montserrat', sans-serif;
+    font-size: 11px;
+    padding-top: 7px;
+    height: 30px;            /* Footer height */
+}
+
+
+@font-face{
+    font-family: navBrandFont;
+    src:url(./assets/Fonts/Oswald-Heavy.ttf);
+}
+
+@font-face{
+    font-family: myFont;
+    src:url(./assets/Fonts/Oswald-Medium.ttf);
+}
+
+.error{
+    color: #DC3545;
+    background-color: wheat;
+    border-radius: 3px;
+}
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #cd9cf2;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to top left, rgba(205, 156, 242, 1), rgba(246, 243, 255, 1))
+    }

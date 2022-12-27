@@ -1,0 +1,99 @@
+<section class="gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card bg-dark text-white" style="border-radius: 1rem">
+                    <div class="card-body">
+                        <form [formGroup]="signupForm">
+                            <div class="text-center">
+                                <h2 class="fw-bold mb-2 text-uppercase">SIGNUP</h2>
+                            </div>
+
+                            <div class="form-outline form-white mb-3">
+                                <label class="form-label" for="form3Example3cg">Your Email</label>
+                                <input formControlName="username" type="email" id="form3Example3cg"
+                                    class="form-control form-control-lg" />
+                                 <div class="error">
+                                    <div *ngIf="duplicateEmail==='notFound'">Email id is already used</div>
+                                    <div *ngIf="signupForm.controls['username'].errors" >
+                                        <div *ngIf="signupForm.controls['username'].errors?.['required']">
+                                            Email is required
+                                        </div>
+                                        <div *ngIf="signupForm.controls['username'].errors?.['emailInvalid']">
+                                            email is in invalid format
+                                        </div>
+                                    </div>
+                                 </div>
+                            </div>
+
+                            <div class="form-outline form-white mb-3">
+                                <label class="form-label" for="form3Example1cg">Your Name</label>
+                                <input formControlName="name" type="text" id="form3Example1cg"
+                                    class="form-control form-control-lg" />
+
+                                <div *ngIf="signupForm.controls['name'].errors" class="error">
+                                    <div *ngIf="signupForm.controls['name'].errors?.['required']">
+                                        Name is required
+                                    </div>
+                                    <div *ngIf="signupForm.controls['name'].errors?.['pattern']">
+                                        Name contains invalid character
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-outline form-white mb-3">
+                                <label class="form-label" for="form3Example4cg">Password</label>
+                                <input formControlName="password" type="password" id="form3Example4cg"
+                                    class="form-control form-control-lg" />
+
+                                <div *ngIf="signupForm.controls['password'].errors" class="error">
+                                    <div *ngIf="signupForm.controls['password'].errors?.['required']">
+                                        Password is required
+                                    </div>
+                                    <div *ngIf="signupForm.controls['password'].errors?.['minlength']">
+                                        Password must be at least 6 characters long
+                                    </div>
+
+                                    <div *ngIf="signupForm.controls['password'].errors?.['passwordStrength']">
+                                        {{signupForm.controls['password'].errors?.['passwordStrength']}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-outline form-white mb-3">
+                                <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                                <input formControlName="confirmPassword" type="password" id="form3Example4cdg"
+                                    class="form-control form-control-lg" />
+
+                                <div *ngIf="signupForm.controls['confirmPassword'].errors" class="error">
+                                    <div *ngIf="signupForm.controls['confirmPassword'].errors?.['required']">
+                                        Confirm your password
+                                    </div>
+                                    
+                                    <div *ngIf="signupForm.controls['confirmPassword'].errors?.['mismatch']">
+                                        Password and Confirm Password are not matching
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="button" (click)="onSubmit()"
+                                    class="btn btn-outline-light btn-block btn-lg px-5 mb-4">
+                                    Sign Up
+                                </button>
+                            </div>
+                            <div class="error text-center" *ngIf="errorMessage!=''">{{errorMessage}}</div>
+
+                            <p class="text-center mb-0">
+                                Have an account already?
+                                <a [routerLink]="'/login'" class="text-white-50 fw-bold"><u>Login here</u></a>
+                            </p>
+                        </form>
+
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

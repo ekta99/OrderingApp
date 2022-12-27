@@ -1,0 +1,182 @@
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container mt-4 h-100 ">
+  <div class="card" *ngIf="productDetails">
+    <div class="row">
+      <aside class="col-sm-5 border-right">
+        <article class="gallery-wrap">
+          <div class="img-big-wrap">
+            <div>
+              <a href="#"><img src="{{ productDetails.productPicture }}" /></a>
+            </div>
+          </div>
+        </article>
+        <!-- gallery-wrap .end// -->
+      </aside>
+      <aside class="col-sm-7 bg-dark text-white">
+        <article class="card-body p-5">
+          <h3 class="title mb-3">{{ productDetails.productName }}</h3>
+
+          <p class="price-detail-wrap">
+            <span class="price h3 text-white">
+              <!-- <span class="currency">INR </span><span class="num">{{productDetails.cost}} </span> -->
+              <div class="mb-3">
+                <!-- <h5 class="mb-0">{{ productDetails.productName }}</h5> -->
+                <div
+                class="text-white"
+                  *ngIf="productDetails.discountPercentage > 20"
+                  style="background-color: orange;"
+                >
+                  Deal Of The Day
+                </div>
+                <div
+                  *ngIf="productDetails.discountPercentage > 20"
+                  class="mb-0"
+                >
+                  <h5 class="text-white">
+                    Deal Price:
+                    {{
+                      productDetails.cost -
+                        productDetails.cost *
+                          0.01 *
+                          productDetails.discountPercentage |  currency : 'INR' : 'symbol' : '1.0-0'
+                    }}
+                    <span style="color: #DC3545">
+                      -{{ productDetails.discountPercentage }}%</span
+                    >
+                  </h5>
+                </div>
+                <p
+                  *ngIf="productDetails.discountPercentage > 20"
+                  class="small text-danger"
+                >
+                  <s> M.R.P. {{ productDetails.cost |  currency : 'INR' : 'symbol' : '1.0-0' }}</s>
+                </p>
+                <!-- <div
+                  *ngIf="!(productDetails.discountPercentage > 20)"
+                  class=" mb-0"
+                >
+                  <h5>M.R.P. {{ productDetails.cost |  currency : 'INR' : 'symbol' : '1.0-0' }}</h5>
+                </div> -->
+                <div
+                *ngIf="
+                  productDetails.discountPercentage <= 20 &&
+                  productDetails.discountPercentage > 0
+                "
+                class="text-white mb-0"
+              >
+                <h5>
+                  <!-- M.R.P. {{productDetails.cost | currency : 'INR' : 'symbol' : '1.0-0'}} -->
+                 Price:
+                  {{
+                    productDetails.cost -
+                      productDetails.cost *
+                        0.01 *
+                        productDetails.discountPercentage
+                      | currency : "INR" : "symbol" : "1.0-0"
+                  }}
+                  <span style="color: #dc3545">
+                    -{{ productDetails.discountPercentage }}%</span
+                  >
+                </h5>
+                <p class="small text-danger">
+                  <s>
+                    M.R.P.
+                    {{
+                      productDetails.cost | currency : "INR" : "symbol" : "1.0-0"
+                    }}</s
+                  >
+                </p>
+              </div>
+              <p
+                *ngIf="productDetails.discountPercentage == 0"
+                class="small text-danger"
+              >
+                <s>
+                  M.R.P.
+                  {{
+                    productDetails.cost | currency : "INR" : "symbol" : "1.0-0"
+                  }}</s
+                >
+              </p>
+              </div>
+            </span>
+          </p>
+          <!-- price-detail-wrap .// -->
+          <dl class="param param-feature">
+            <dt>Brand#</dt>
+            <dd>{{ productDetails.manufacturer }}</dd>
+          </dl>
+          <dl class="param param-feature">
+            <dt>Rating#</dt>
+            <dd class="ms-auto text-warning"> <span *ngFor="let x of productDetails.rating | star:'before'"><i class="fa fa-star"></i></span>
+              <span *ngFor="let y of productDetails.rating | star:'after'"><i class="fa fa-star-o"></i></span>
+  </dd>
+          </dl>
+
+          <dl class="item-property ">
+            <dt>Description</dt>
+            <!-- <ul  >
+              <li *ngFor="let l of descriptionList; let i = index">{{ l }}</li>
+            </ul> -->
+            <p>
+              {{(showMore) ? productDetails.description : productDetails.description | slice:0:150}} <span *ngIf="!showMore">...</span> 
+              <a href="javascript:;" class="text-white" *ngIf="!showMore" (click)="showMore=true">[Show More]</a>
+              <a href="javascript:;" class="text-white" *ngIf="showMore" (click)="showMore=false">[Show Less]</a>
+              </p>
+          </dl>
+
+          <dl class="param param-feature">
+            <dt>Color</dt>
+            <dd>
+              <span *ngFor="let l of productDetails.colors">{{ l }} </span>
+            </dd>
+          </dl>
+         
+          <div class="row">
+            <div class="col-sm-5">
+              <dl class="param param-inline">
+                <dt>Quantity:</dt>
+                <dd>
+                  <select
+                    class="form-control form-control-sm"
+                    style="width: 70px"
+                    #select
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </dd>
+              </dl>
+              <!-- item-property .// -->
+            </div>
+           
+          </div>
+     
+
+          <button
+            class="btn btn-outline-light btn-block text-uppercase my-1"
+            (click)="addToCart(productDetails.productName)"
+          >
+            <i class="fa fa-shopping-cart"></i> Add to cart
+          </button>
+          <div class="success" *ngIf="successMessage!=''">{{successMessage}}</div>
+          <button
+            class="btn btn-outline-light btn-block text-uppercase my-1"
+            [routerLink]="['viewcart']"
+          >
+            <i class="fa fa-shopping-cart"></i> go to cart
+          </button>
+        </article>
+        <!-- card-body.// -->
+      </aside>
+      <!-- col.// -->
+    </div>
+    <!-- row.// -->
+  </div>
+  <!-- card.// -->
+</div>

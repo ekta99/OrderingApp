@@ -1,0 +1,162 @@
+
+<section >
+  <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarTogglerDemo03">
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input"(change)="dealsOfTheDay=!dealsOfTheDay" id="customSwitch1" >
+        <label class="custom-control-label bold f-20" for="customSwitch1"  >Deals of the day</label>
+      </div>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" name="search" [(ngModel)]="searchText" placeholder="Search" aria-label="Search">
+
+      </form>
+
+    </div>
+  </nav>
+
+
+<section id="demo" class="carousel slide" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
+        alt="carousel"
+        class="d-block w-100"
+        height="300"
+      />
+      <div class="carousel-caption"></div>
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
+        alt="carousel"
+        class="d-block w-100"
+        height="300"
+      />
+      <div class="carousel-caption"></div>
+    </div>
+    <div class="carousel-item">
+      <img
+        src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
+        alt="carousel"
+        class="d-block w-100"
+        height="300"
+      />
+      <div class="carousel-caption"></div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</section>
+  <section class="container py-5">
+  
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 mb-md-4" *ngFor="let product of productList | filterPipe : searchText |filterPipe: dealsOfTheDay">
+        <div class="card card-sm " style="height: 480px;">
+        
+        <img
+        src="{{ product.productPicture }}"
+        class="card-img-top"
+        alt="{{ product.productName }}"
+      />
+      <div class="card-body">
+        <div class=" justify-content-between">
+          <p >
+            <a [routerLink]="['product-details',product.productName]" class="text-dark">{{ product.productName }}</a>
+          </p>
+          
+        <div class=" mb-3">
+          <!-- <h5 class="mb-0">{{ product.productName }}</h5> -->
+          <div *ngIf="product.discountPercentage>20" style="background-color: orange;">Deal Of The Day </div>
+          <div *ngIf="product.discountPercentage>20" class="text-dark mb-0"><h5>
+            Deal Price: {{
+             ( product.cost - product.cost * 0.01 * product.discountPercentage) | currency : 'INR' : 'symbol' : '1.0-0'
+            }}
+          </h5></div>
+          <p *ngIf="product.discountPercentage>20" class="small text-danger">
+            <s>
+              M.R.P. {{product.cost | currency : 'INR' : 'symbol' : '1.0-0'}}</s>
+          </p>
+          <!-- <div *ngIf="!(product.discountPercentage>20)" class="text-dark mb-0"><h5>
+            M.R.P. {{product.cost | currency : 'INR' : 'symbol' : '1.0-0'}}
+          </h5></div> -->
+          <div
+          *ngIf="
+            product.discountPercentage <= 20 &&
+            product.discountPercentage > 0
+          "
+          class="text-dark mb-0"
+        >
+          <h5>
+            <!-- M.R.P. {{product.cost | currency : 'INR' : 'symbol' : '1.0-0'}} -->
+            Price:
+            {{
+              product.cost -
+                product.cost *
+                  0.01 *
+                  product.discountPercentage
+                | currency : "INR" : "symbol" : "1.0-0"
+            }}
+            <span style="color: #dc3545">
+              -{{ product.discountPercentage }}%</span
+            >
+          </h5>
+          <p class="small text-danger">
+            <s>
+              M.R.P.
+              {{
+                product.cost | currency : "INR" : "symbol" : "1.0-0"
+              }}</s
+            >
+          </p>
+        </div>
+        <p
+          *ngIf="product.discountPercentage == 0"
+          class="small text-danger"
+        >
+          <s>
+            M.R.P.
+            {{
+              product.cost | currency : "INR" : "symbol" : "1.0-0"
+            }}</s
+          >
+        </p>
+          <p>manufacturer : {{product.manufacturer}}</p>
+        </div>
+        
+          
+        </div>
+
+
+        <div class="d-flex justify-content-between mb-2">
+          <!-- <p class="text-muted mb-0">Available: <span class="fw-bold">6</span></p> -->
+          <div class="ms-auto text-warning">
+
+            <span *ngFor="let x of product.rating | star:'before'"><i class="fa fa-star"></i></span>
+
+            <span *ngFor="let y of product.rating | star:'after'"><i class="fa fa-star-o"></i></span>
+
+          </div>
+        
+        </div>
+      </div>
+         </div>        
+      </div>
+     
+    </div>
+  </section>
+</section>
+
